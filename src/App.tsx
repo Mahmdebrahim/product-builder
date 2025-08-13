@@ -1,5 +1,5 @@
 
-import { productList, formInputsList } from "./components/Data"
+import { productList, formInputsList, colors } from "./components/Data"
 import type { IProduct } from "./components/Interfaces"
 import ProductCard from "./components/ProductCard"
 import Button from "./components/Ui/Button"
@@ -8,6 +8,8 @@ import Modal from "./components/Ui/Model"
 import { useState, type ChangeEvent, type FormEvent } from "react"
 import { porductValidation } from "./validation"
 import ErrorMsg from "./components/ErrorMsg"
+import CircleColors from "./components/CircleColors"
+import { v4 as uuid } from "uuid";
 const App = () => {
    //* _________DRY__________ *\\
    const DefaultPtoductObj = {
@@ -24,7 +26,9 @@ const App = () => {
    //* ________STATE_________ *\\   
    ///////////////////////////////////////////////////////
    const [isOpen, setIsOpen] = useState(false);
-   const [product,setProduct] = useState<IProduct>(DefaultPtoductObj)
+   const [productsList,setProductsList] = useState<IProduct[]>(productList)
+   const [productInform,setProductInform] = useState<IProduct>(DefaultPtoductObj)
+   const [tempColor,setempColor] = useState<string[]>([])
    const [errorMsg, setErrorMsg] = useState(
       {
          title: "",
@@ -33,18 +37,21 @@ const App = () => {
          price: "", 
       }
    )
-   console.log("err:", errorMsg)
+   // console.log(tempColor)
+   // console.log("err:", errorMsg)
    //* ________HANDLER_________ *\\ 
    ///////////////////////////////////////////////////////
    const  open = () => setIsOpen(true);
    const close = () => setIsOpen(false);
    //////
    const changeHandler = (e:ChangeEvent<HTMLInputElement>) =>{
+      // to assign the value when onChage to the name
       const {value,name} = e.target;
-      setProduct({
-         ...product,
+      setProductInform({
+         ...productInform,
          [name]:value,
       })
+      // to remove errorMsg from form in onChange value
       setErrorMsg(
          {
             ...errorMsg,
@@ -55,28 +62,33 @@ const App = () => {
 
    const onCancel = () => {
       console.log("cansle")
-      setProduct(DefaultPtoductObj)
+      setProductInform(DefaultPtoductObj)
       close();
    }
 
    const submitHandler = (event: FormEvent<HTMLFormElement>): void => {
      event.preventDefault();
      const errors = porductValidation({
-        title: product.title,
-        description: product.description,
-        imageURL:product.imageURL,
-        price:product.price
+        title: productInform.title,
+        description: productInform.description,
+        imageURL:productInform.imageURL,
+        price:productInform.price
      });
      const errorMsg =  Object.values(errors).some(val => val !== "") 
      if(errorMsg){
       setErrorMsg(errors)
       return;
      }
-     console.log(alert("done"));
+     setProductsList(   
+      prev => [ { ...productInform, id:uuid(), colors:tempColor }, ...prev]
+     )
+      setProductInform(DefaultPtoductObj)
+      setempColor([])
+      close()
    }
    //* ________RENDER_________ *\\
    ///////////////////////////////////////////////////////
-   const products = productList.map(product => <ProductCard key={product.id}
+   const products = productsList.map(product => <ProductCard key={product.id}
    product={product}/>);
    const Inputs = formInputsList.map(input => 
       <div className="flex flex-col" key={input.id}>
@@ -85,23 +97,46 @@ const App = () => {
             type={input.type} 
             name={input.name} 
             id={input.id} 
-            value={product[input.name]} 
+            value={productInform[input.name]} 
             onChange={changeHandler}
          />
          <ErrorMsg msg={errorMsg[input.name]}/>
       </div>
-   ) 
+   )
+   const circleColorsList =  colors.map(color => <CircleColors key={color} color={color} 
+      onClick={() =>  {
+         if(tempColor.includes(color)){
+            setempColor(tempColor.filter((col) => col !== color))
+            return
+         }
+         setempColor((prev) => [...prev, color])
+      }
+    }
+   />)
 
    ///////////////////////////////////////////////////////////////////////////
    //! START POINT !\\
     return (
-       <main className=" mx-auto">
-          <Button className="bg-indigo-800" onClick={open}>build product</Button>
+       <main className=" container mx-auto px-4 py-4">
+          <Button className="bg-indigo-800 p-2 block mx-auto font-medium hover:bg-indigo-700 cursor-pointer transition duration-300 ease-in-out " width="w-fit" onClick={open}>build product</Button>
           <Modal close={close} isOpen={isOpen} title="ADD A NEW PRODUCT">
             <form className="flex flex-col gap-4 " onSubmit={submitHandler}>
                {Inputs}
+               <div className="flex items-center gap-1 my-2 flex-wrap">
+                 {tempColor.map(color => (
+                     <span 
+                        className="p-1 mr-1 mp-1 text-sm rounded-md text-white"
+                        style={{ backgroundColor: color }}
+                     >
+                        {color}
+                     </span>
+                  ))}
+               </div>
+               <div className="flex items-center gap-1 my-2">
+                  {circleColorsList}
+               </div>
                <div className="flex flex-co gap-4 items-center">
-                     <Button className="bg-indigo-800" onClick={()=>{}}>Submit</Button>
+                     <Button className="bg-indigo-800 "  onClick={()=>{}}>Submit</Button>
                      <Button className="bg-gray-400 hover:bg-gray-600         duration-300 ease-out "  
                      onClick={onCancel}>
                      Cansle

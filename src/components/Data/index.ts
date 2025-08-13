@@ -64,13 +64,13 @@ export const productList: IProduct[] = [
     description:
       "As luxury T-Shirt is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
     imageURL:
-      "https://images.unsplash.com/photo-1552831388-6a0b3575b32a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80",
+      "https://media.istockphoto.com/id/2206816577/photo/white-woman-trendy-sneakers-on-color-background-top-view.webp?a=1&b=1&s=612x612&w=0&k=20&c=QxyhKTd3gta2Zj6s0PBglJ8EoXR2X4GddgYZ9flYIIQ=",
     price: "1500",
-    colors: [],
+    colors: ["#A31ACB", "#3C2A21", "#1F8A70", "#820000", "#FF0032"],
     category: {
       name: "PC Desktop",
       imageURL:
-        "https://images.unsplash.com/photo-1552831388-6a0b3575b32a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80",
+        "https://media.istockphoto.com/id/2206816577/photo/white-woman-trendy-sneakers-on-color-background-top-view.webp?a=1&b=1&s=612x612&w=0&k=20&c=QxyhKTd3gta2Zj6s0PBglJ8EoXR2X4GddgYZ9flYIIQ=",
     },
   },
   {
@@ -135,13 +135,13 @@ export const productList: IProduct[] = [
     description:
       "As luxury T-Shirt is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
     imageURL:
-      "https://images.unsplash.com/photo-1552831388-6a0b3575b32a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80",
+      "https://media.istockphoto.com/id/1277507189/photo/mens-sneakers-on-a-colored-background-mens-footwear-minimalism.jpg?s=612x612&w=0&k=20&c=MD71PwIqMApBv3mlWRs96iYYbgDoilI1n_M6JGmx6-k=",
     price: "1500",
     colors: [],
     category: {
       name: "PC Desktop",
       imageURL:
-        "https://images.unsplash.com/photo-1552831388-6a0b3575b32a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80",
+        "https://media.istockphoto.com/id/1277507189/photo/mens-sneakers-on-a-colored-background-mens-footwear-minimalism.jpg?s=612x612&w=0&k=20&c=MD71PwIqMApBv3mlWRs96iYYbgDoilI1n_M6JGmx6-k=",
     },
   },
 ];

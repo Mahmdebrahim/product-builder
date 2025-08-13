@@ -3,23 +3,26 @@ import type { IProduct } from "./Interfaces";
 import Button from "./Ui/Button";
 import { txtSlicer } from "./Utilities/txtSlicer";
 import Image from "./Image";
+import CircleColors from "./CircleColors";
 interface IProps {
     product: IProduct,
 }
 const ProductCard = ({product}:IProps) => {
-    const {category, description, imageURL, price, title, } = product
+    const {category, description, imageURL, price, colors, title, } = product;
+    
+    //* ________RENDER_________ *\\
+    const circleColorsList =  colors.map(color => <CircleColors key={color} color={color}/>)
+    console.log(colors)
     return (
-        <div className="border border-gray-200 p-2 rounded-lg flex flex-col gap-2 cursor-pointre max-w-sm m-auto sm:m-0 ">
+        <div className="border border-gray-200 p-2 rounded-lg flex flex-col gap-3 cursor-pointre max-w-sm md:min-h-fit m-auto sm:m-0 ">
             <Image ImgUrl={imageURL} alt={category.name} ClassName="rounded-lg md:max-w-md lg:object-cover h-52 w-full"/>
             <div className="">
                 <h3 className="font-bold">{title}</h3>
                 <p className="text-gray-500">{txtSlicer(description)}</p>
             </div>
-            <div className="flex items-center gap-1 my-2">
-                <span className=" rounded-4xl bg-red-600 w-5 h-5 cursor-pointer"></span>
-                <span className=" rounded-4xl bg-red-700 w-5 h-5 cursor-pointer"></span>
-                <span className=" rounded-4xl bg-red-800 w-5 h-5 cursor-pointer"></span>
-                <span className=" rounded-4xl bg-red-950 w-5 h-5 cursor-pointer"></span>
+            <div className="flex items-center sm:h-5 flex-wrap gap-1 my-2">
+                {/* {colors === [] && <span className="block">lmlm</span>} */}
+                {circleColorsList}
             </div>
             <div className="flex items-center justify-between">
                 <span>${price}</span>
