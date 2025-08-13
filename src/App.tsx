@@ -1,32 +1,56 @@
+
 import { productList, formInputsList } from "./components/Data"
+import type { IProduct } from "./components/Interfaces"
 import ProductCard from "./components/ProductCard"
 import Button from "./components/Ui/Button"
 import Input from "./components/Ui/Input"
 import Modal from "./components/Ui/Model"
 
-import { useState } from "react"
+import { useState, type ChangeEvent } from "react"
 const App = () => {
+   /* ________STATE_________ */   
+   ///////////////////////////////////////////////////////
+   const [isOpen, setIsOpen] = useState(false);
+   const [product,setProduct] = useState<IProduct>({
+      title: "",
+      description: "",
+      imageURL: "",
+      price: "",
+      colors: [],
+      category:{
+         name: "",
+         imageURL: "",
+      }
+   })
+   console.log(product)
+   /* ________Handeler STATE_________ */ 
+   ///////////////////////////////////////////////////////
+   const  open = () => setIsOpen(true);
+   const close = () => setIsOpen(false);
+   //////
+   const changeHandler = (e:ChangeEvent<HTMLInputElement>) =>{
+      const {value,name} = e.target;
+      setProduct({
+         ...product,
+         [name]:value,
+      })
+   }
    /* ________render_________ */
+   ///////////////////////////////////////////////////////
    const products = productList.map(product => <ProductCard key={product.id}
-    product={product}/>);
+   product={product}/>);
    const Inputs = formInputsList.map(input => 
       <div className="flex flex-col">
-         <label htmlFor={input.id} className="mb-1 text-sm font-medium text-indigo-80">{input.label}</label>
-         <Input type={input.type} name={input.name} id={input.id}/>
+         <label htmlFor={input.id} className="mb-1 text-sm font-medium  text-indigo-80">{input.label}</label>
+         <Input 
+            type={input.type} 
+            name={input.name} 
+            id={input.id} 
+            value={product[input.name]} 
+            onChange={changeHandler}
+         />
       </div>
    ) 
-   ///////////////////////////////////////////////////////
-   /* ________Modal State_________ */   
-   const [isOpen, setIsOpen] = useState(false);
-
-   /* ________Modal Handeler_________ */ 
-   function open() {
-      setIsOpen(true)
-   }
-   
-   function close() {
-      setIsOpen(false)
-   }
    ///////////////////////////////////////////////////////////////////////////
    //! START POINT
     return (
