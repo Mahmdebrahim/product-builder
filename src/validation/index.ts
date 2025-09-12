@@ -13,7 +13,8 @@ export const porductValidation = (product:IError) => {
       imageURL: "",
       price: "",
     }
-    const rgexUrl = /^(?:https?|ftp):\/\/[^\s]+?\.(?:jpg|jpeg|png|gif|bmp|tiff|webp)$/i.test(product.imageURL);
+    
+    const rgexUrl = /^(https|ftp|http):\/\/[^ "]+$/.test(product.imageURL);
 
 
     if (!product.title.trim() ||  product.title.length > 80 || product.title.length < 10 ) {
@@ -23,10 +24,10 @@ export const porductValidation = (product:IError) => {
         errors.description = "Product descrption must be between 10 and 900 characters!";
     }
     if (!product.price.trim() || isNaN(Number(product.price)) ) {
-        errors.price = "Product title must be between 10 and 10 characters!";
+        errors.price = "Product price must be between 10 and 10 characters!";
     }
     if (!product.imageURL.trim() ||  !rgexUrl) {
-        errors.imageURL = "Product title must be number between 10 and 10 characters!";
+        errors.imageURL = "Product image must be number between 10 and 10 characters!";
     }
     return errors;
 }
